@@ -3,45 +3,93 @@
 
 
 //2) Return an array of unique values
-// const a = [12, 3, 12, "12", 2, 5, 5, "Name", "Name", "Value"];
+const a = [12, 3, 12, "12", 2, 5, 5, "Name", "Name", "Value"];
 //exp res: [12, 3, "12", 2, 5, "Name", "Value"]
 
 
+// THe first way
+const uniqueArray = Array.from(new Set(a))
+console.log(uniqueArray);
 
 
-//3) Calculate the total amount paid for products whose cost is not higher than 12 and return list of products
-// const bucket = [
-//   { product: "Potato", notes: 5, paid: 48 },
-//   { product: "Cucumber", notes: 3, paid: 84 },
-//   { product: "Сarrot", notes: 10, paid: 120 },
-//   { product: "Meet", notes: 10, paid: 200 },
-//   { product: "Milk", notes: 2, paid: 12 }
-// ];
+// THe second way
+const uniqueValues = (arr) => {
+    let res = []
+
+    for(let str of arr){
+        if(!res.includes(str)){
+            res.push(str)
+        }
+    }
+
+    return res;
+}
+
+console.log(uniqueValues(a));
+
+
+// THe third way
+const uniqueArr = (arr) => {
+    return arr.filter((elem, id) => arr.indexOf(elem) === id)
+}
+
+console.log(uniqueArr(a));
+
+
+//3) Рассчитать общую сумму, уплаченную за товары, стоимость которых не выше 12, и вернуть список товаров
+ const bucket = [
+   { product: "Potato", notes: 5, paid: 48 },
+   { product: "Cucumber", notes: 3, paid: 84 },
+   { product: "Сarrot", notes: 10, paid: 120 },
+   { product: "Meet", notes: 10, paid: 200 },
+   { product: "Milk", notes: 2, paid: 12 }
+ ];
+
+const hi = busket.filter((product) => product.paid/product.notes <= 12)
+console.log(hi);
+
 //exp res: {products: ['Potato',Сarrot, Milk], totalPaid: 180}
 
 
+const calculatePaid = (bucket) => {
+    const product = [];
+    const totalPaid = 0;
+    
+    for (const i = 0; i < bucket.length; i++) {
+      if (bucket[i].paid / bucket[i].notes <= 12) {
+        totalPaid += bucket[i].paid;
+        product.push(bucket[i].product); 
+      }
+    }
 
-// 4) Write a function that will sum only the numbers from the passed nested array. Use recursion.
+    return {product, totalPaid }; 
+}
+
+console.log(calculatePaidSumAndReturnProductList(bucket))
+
+
+
+// 4) Напишите функцию, которая будет суммировать только числа из переданного вложенного массива. Используйте рекурсию.
 // const a = [1, "4", [NaN, 8, null, [1]], 2];
 //exp res: 12
 
 
 //Start Task 5 ------===-----
-// const a = [
-//   { number: 17, day: "Mon", time: "12:45", busStopName: "Melnikov lug" },
-//   { number: 10, day: "Mon", time: "12:45", busStopName: "Melnikov lug" },
-//   { number: 16, day: "Wen", time: "12:45", busStopName: "Melnikov lug" },
-//   { number: 9, day: "Mon", time: "11:25", busStopName: "Melnikov lug" },
-//   { number: 16, day: "Tue", time: "18:30", busStopName: "Melnikov lug" },
-//   { number: 4, day: "Thu", time: "10:45", busStopName: "Melnikov lug" },
-//   { number: 10, day: "Sut", time: "12:45", busStopName: "Melnikov lug" },
-//   { number: 5, day: "Thu", time: "12:45", busStopName: "Melnikov lug" },
-//   { number: 5, day: "Fri", time: "12:45", busStopName: "Univermag" },
-//   { number: 17, day: "Sun", time: "08:10", busStopName: "Melnikov lug" },
-//   { number: 8, day: "Fri", time: "12:45", busStopName: "Univermag" },
-//   { number: 3, day: "Wen", time: "16:45", busStopName: "Checherskaya" }
-// ];
-// exp res: 
+ const shedule = [
+    { number: 17, day: "Mon", time: "12:45", busStopName: "Melnikov lug" },
+    { number: 10, day: "Mon", time: "12:45", busStopName: "Melnikov lug" },
+    { number: 16, day: "Wen", time: "12:45", busStopName: "Melnikov lug" },
+    { number: 9, day: "Mon", time: "11:25", busStopName: "Melnikov lug" },
+    { number: 16, day: "Tue", time: "18:30", busStopName: "Melnikov lug" },
+    { number: 4, day: "Thu", time: "10:45", busStopName: "Melnikov lug" },
+    { number: 10, day: "Sut", time: "12:45", busStopName: "Melnikov lug" },
+    { number: 5, day: "Thu", time: "12:45", busStopName: "Melnikov lug" },
+    { number: 5, day: "Fri", time: "12:45", busStopName: "Univermag" },
+    { number: 17, day: "Sun", time: "08:10", busStopName: "Melnikov lug" },
+    { number: 8, day: "Fri", time: "12:45", busStopName: "Univermag" },
+    { number: 3, day: "Wen", time: "16:45", busStopName: "Checherskaya" }
+ ];
+// exp res: {busStopName: {day: {time: [number], ...} | '-'}, ...}
 /* {
     "Melnikov lug": {
         "Mon": {
