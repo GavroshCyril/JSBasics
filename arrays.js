@@ -45,11 +45,7 @@ console.log(uniqueArr(a));
    { product: "Milk", notes: 2, paid: 12 }
  ];
 
-const hi = busket.filter((product) => product.paid/product.notes <= 12)
-console.log(hi);
-
 //exp res: {products: ['Potato',Сarrot, Milk], totalPaid: 180}
-
 
 const calculatePaid = (bucket) => {
     const product = [];
@@ -62,16 +58,32 @@ const calculatePaid = (bucket) => {
       }
     }
 
-    return {product, totalPaid }; 
+    return { product, totalPaid }; 
 }
 
 console.log(calculatePaidSumAndReturnProductList(bucket))
 
 
-
 // 4) Напишите функцию, которая будет суммировать только числа из переданного вложенного массива. Используйте рекурсию.
 // const a = [1, "4", [NaN, 8, null, [1]], 2];
 //exp res: 12
+
+function sumArray(numbers) {
+    let sum = 0;
+  
+    numbers.forEach((number) => {
+      if (Array.isArray(number)) {
+        sum += sumArray(number); // рекурсивный вызов функции для вложенного массива
+      } else if (typeof number === 'number' && !isNaN(number)) {
+        sum += number;
+      }
+    });
+  
+    return sum;
+  }
+  
+  const mass = [1, "4", [NaN, 8, null, [1]], 2];
+  console.log(sumArray(mass)); 
 
 
 //Start Task 5 ------===-----
@@ -126,20 +138,38 @@ console.log(calculatePaidSumAndReturnProductList(bucket))
 } */
 
 
+const res = {};
+
+shedule.forEach(({ number, day, time, busStopName }) => {
+  if (!res[busStopName]) {
+    res[busStopName] = {};
+  }
+  if (!res[busStopName][day]) {
+    res[busStopName][day] = {};
+  }
+  if (!res[busStopName][day][time]) {
+    res[busStopName][day][time] = [];
+  }
+  res[busStopName][day][time].push(number);
+});
+
+console.log(res);
+
 //End Task 5------===-----
 
 
 
 //Start Task 6 ------===-----
-// const metrics = [
-//   { date: "2021-07-06T11:00:00+0000", country: "BY", referrer: "VK" },
-//   { date: "2021-07-06T22:20:20+0000", country: "ENG", referrer: "INST" },
-//   { date: "2021-07-06T22:30:30+0000", country: "ENG", referrer: "TW" },
-//   { date: "2021-07-06T22:40:30+0000", country: "US", referrer: "TW" },
-//   { date: "2021-07-07T08:20:00+0000", country: "FR", referrer: "VK" },
-//   { date: "2021-07-07T23:30:00+0000", country: "US", referrer: "INST" },
-//   { date: "2021-07-07T23:40:00+0000", country: "BY", referrer: "TEL" }
-// ];
+const metrics = [
+   { date: "2021-07-06T11:00:00+0000", country: "BY", referrer: "VK" },
+   { date: "2021-07-06T22:20:20+0000", country: "ENG", referrer: "INST" },
+   { date: "2021-07-06T22:30:30+0000", country: "ENG", referrer: "TW" },
+   { date: "2021-07-06T22:40:30+0000", country: "US", referrer: "TW" },
+   { date: "2021-07-07T08:20:00+0000", country: "FR", referrer: "VK" },
+   { date: "2021-07-07T23:30:00+0000", country: "US", referrer: "INST" },
+   { date: "2021-07-07T23:40:00+0000", country: "BY", referrer: "TEL" }
+ ];
+ 
 // exp res: {date: {clicks: {afterMN: 5, beforeMN: 2}, countriesTotal: {country: 12, ...}, referrerTotal: {referrer: 5, ...}},... }
 /* 
 {
