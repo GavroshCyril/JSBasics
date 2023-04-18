@@ -1,16 +1,13 @@
 //1) Write polyfils for map, filter and reduce array methods
 
 
-
 //2) Return an array of unique values
 const a = [12, 3, 12, "12", 2, 5, 5, "Name", "Name", "Value"];
 //exp res: [12, 3, "12", 2, 5, "Name", "Value"]
 
-
 // THe first way
 const uniqueArray = Array.from(new Set(a))
 console.log(uniqueArray);
-
 
 // THe second way
 const uniqueValues = (arr) => {
@@ -72,9 +69,7 @@ function sumArray(numbers) {
     let sum = 0;
   
     numbers.forEach((number) => {
-      if (Array.isArray(number)) {
-        sum += sumArray(number); // рекурсивный вызов функции для вложенного массива
-      } else if (typeof number === 'number' && !isNaN(number)) {
+     if (typeof number === 'number' && !isNaN(number)) {
         sum += number;
       }
     });
@@ -137,9 +132,7 @@ function sumArray(numbers) {
     }
 } */
 
-
 const res = {};
-
 shedule.forEach(({ number, day, time, busStopName }) => {
   if (!res[busStopName]) {
     res[busStopName] = {};
@@ -156,8 +149,6 @@ shedule.forEach(({ number, day, time, busStopName }) => {
 console.log(res);
 
 //End Task 5------===-----
-
-
 
 //Start Task 6 ------===-----
 const metrics = [
@@ -206,5 +197,46 @@ const metrics = [
         }
     }
 }
+
 */
+let result = {};
+ 
+ for(let i = 0; i < metrics.length; i++){
+   let date = metrics[i].date.slice(0, 10);
+   let country = metrics[i].country;
+   let referrer = metrics[i].referrer;
+   
+   if(!result[date]){
+     result[date] = {
+       clicks: {
+        afterMN: 0,
+         beforeMN: 0,
+               
+       },
+       countriesTotal: {},
+       referrerTotal: {}
+     };
+   }
+   
+   if(metrics[i].date.slice(11, 13) < 12){
+    result[date].clicks.afterMN++;
+     
+   } else {
+    result[date].clicks.beforeMN++;
+   }
+   
+   if(!result[date].countriesTotal[country]){
+     result[date].countriesTotal[country] = 1;
+   } else {
+     result[date].countriesTotal[country]++;
+   }
+   
+   if(!result[date].referrerTotal[referrer]){
+     result[date].referrerTotal[referrer] = 1;
+   } else { 
+     result[date].referrerTotal[referrer]++;
+   }
+ }
+ 
+ console.log(result); 
 //End Task 6------===-----
