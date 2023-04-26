@@ -178,7 +178,14 @@ const isEqual = (obj1, obj2) =>   {
   const data1 = { a: 1, b: 1 };
   const data2 = { a: 1, b: 1 };
   const data3 = { a: 1, b: 2 };
+  const data4 = { a: 3, b: 2 };
   
   
   console.log(isEqual(data1, data2)); 
   console.log(isEqual(data1, data3));
+  console.log(isEqual(data4, data3));
+
+
+  const c ={vale: '123'}
+  const {vale} = c;
+  console.log(vale);

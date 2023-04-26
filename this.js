@@ -15,7 +15,7 @@ let someObj = {
     age: 32,
 };
   
-  someObj.greeting= function(){
+  someObj.greeting = function(){
       console.log(`My name is ${this.name}. I am ${this.age}`);
   }
   
@@ -122,6 +122,8 @@ function MyFirstConstructorFunc(name, age){
     this.greeting = function(){
         return `My name is ${this.name}. I am ${this.age}`;
     }
+
+    return this;
 }
 
 
