@@ -174,3 +174,47 @@ class Site {
 
 let site = new Site('www.gavroshcyril.com')
 console.log(site.welcome());
+
+
+
+class User {
+    constructor(name){
+        this.name = name;
+    }
+
+    get name(){
+        return this._name
+    }
+
+    set name(value){
+        if(value.length < 4){
+            console.log('Name is very short');
+            return;
+        }
+        this._name = value;
+    }
+}
+
+
+let user = new User("Cyril")
+console.log(user.name);
+
+class Person {
+    #name
+
+    constructor(name){
+        this.#name = name
+    }
+
+
+    getName(){
+        return this.#name
+    }
+
+    setName(name){
+        this.#name = name
+    }
+}
+
+const person = new Person('Cyril')
+console.log(person.getName());
