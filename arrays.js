@@ -12,7 +12,7 @@ console.log(uniqueArray);
 // THe second way
 const uniqueValues = (arr) => {
     let res = []
-
+/* dfgd */
     for(let str of arr){
         if(!res.includes(str)){
             res.push(str)
