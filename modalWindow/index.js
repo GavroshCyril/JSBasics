@@ -1,26 +1,25 @@
-const openModalButton = document.getElementById('open-modal')
-const modalWindowOverlay = document.getElementById('modal-overlay')
-const closeModalButton = document.getElementById('close-modal')
+const openModalButton = document.getElementById('open-modal'),
+        modalWindowOverlay = document.getElementById('modal-overlay'),
+        closeModalButton = document.getElementById('close-modal');
 
 const showModalWindow = () => {
     modalWindowOverlay.style.display = "flex";
-}
-
-openModalButton.addEventListener("click",showModalWindow)
-
+    setTimeout(() => {
+        modalWindowOverlay.style.opacity = 1;
+    }, 40);
+};
 
 const hideModalWindow = () => {
-    modalWindowOverlay.style.display = 'none';
-}
+    modalWindowOverlay.style.opacity = 0;
+    setTimeout(() => {
+        modalWindowOverlay.style.display = 'none';
+    }, 400);
+};
 
+openModalButton.addEventListener("click", showModalWindow);
 closeModalButton.addEventListener("click", hideModalWindow);
-
-
-const hideModalWindowOnBlur = (e) => {
-
+modalWindowOverlay.addEventListener("click", (e) => {
     if(e.target === e.currentTarget) {
         hideModalWindow();
     }
-}
-
-modalWindowOverlay.addEventListener("click", hideModalWindowOnBlur)
+});

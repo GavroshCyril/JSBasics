@@ -57,3 +57,17 @@ f();
 }
 
 showAvatar() */
+
+const wringOut = new Promise()
+const squatting = new Promise()
+
+const myTrainnng = async () => {
+    try{
+        await wringOut(10)
+        console.log('Wring out 10 times');
+        await squatting(0)
+        console.log('Wring out 20 times');
+    } catch(err){
+        console.log('Im tired.... I cant do this anymore');
+    }
+}

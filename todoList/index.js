@@ -2,38 +2,87 @@ const inputBox = document.getElementById('input-box');
 const listContainer = document.getElementById('list-container'); 
 
 const addTask = () => {
-    if(inputBox.value === ''){
-        alert('Warning! You must write something!')
+    
+    if (inputBox.value === '') {
+        alert('Warning! You must write something!');
     } else {
-        let li = document.createElement('li')
 
-        li.innerHTML = inputBox.value;
-        listContainer.appendChild(li)
+    const newTask = {
+        id: new Date().getMilliseconds().toString(),
+        value: inputBox.value
+    };
 
-        let span = document.createElement('span')
-        span.innerHTML = '\u00d7'
-        li.appendChild(span)
+    const li = document.createElement('li');
+        li.setAttribute('data-id', newTask.id);
+        li.textContent = newTask.value;
+        listContainer.appendChild(li);
+
+   /*  const span = document.createElement('span'); */
+        /* span.innerHTML = '\u00d7'; */
+/*         li.appendChild(span); */
+
+    inputBox.value = '';
+    saveData();
     }
-    inputBox.value = ''
-    saveData()
-}
+};
 
 listContainer.addEventListener('click', (e) => {
-    if(e.target.tagName === 'LI'){
-        e.target.classList.toggle('checked')
-        saveData()
-    } else if (e.target.tagName === "SPAN"){
+    if (e.target.tagName === 'LI') {
+        e.target.classList.toggle('checked');
+        saveData();
+    } else if (e.target.tagName === 'SPAN') {
+        const id = e.target.parentElement.getAttribute('data-id');
         e.target.parentElement.remove();
-        saveData()
+        deleteTask(id);
+        }
+    }, false
+);
+
+const deleteTask = (id) => {
+    const tasks = getTasks();
+    const updatedTasks = tasks.filter((task) => task.id !== id);
+    saveTasks(updatedTasks);
+};
+
+const getTasks = () => {
+    const tasksString = localStorage.getItem('tasks');
+    if (tasksString) {
+        return JSON.parse(tasksString);
+    } else {
+        return [];
     }
-}, false)
+};
+
+const saveTasks = (tasks) => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+};
 
 const saveData = () => {
-    localStorage.setItem('data', listContainer.innerHTML)
-}
+    const tasks = [];
+    listContainer.querySelectorAll('li').forEach((li) => {
 
-const showTask = () => {
-    listContainer.innerHTML = localStorage.getItem('data')
-}
+    const task = {
+        id: li.getAttribute('data-id'),
+        value: li.textContent
+    };
 
-showTask()
+        tasks.push(task);
+    });
+    saveTasks(tasks);
+};
+
+const showTasks = () => {
+    const tasks = getTasks();
+    tasks.forEach((task) => {
+        const li = document.createElement('li');
+        li.setAttribute('data-id', task.id);
+        li.textContent = task.value;
+        listContainer.appendChild(li);
+
+    const span = document.createElement('span');
+        span.innerHTML = '\u00d7';
+        li.appendChild(span);
+    });
+};
+
+showTasks();
