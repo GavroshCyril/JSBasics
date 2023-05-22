@@ -16,19 +16,29 @@ body{
     min-height: 100vh;
     padding: 10px;
     background-color: aliceblue;
+    
 }
 
 .todo-app{
     width: 100%;
-    max-width: 540px;
+    max-height: 578px;
+    overflow: auto;
+    max-width: 580px;
     background: #fff;
     margin: 100px auto 20px;
-    padding: 40px 30px 70px;
+    padding: 10px 30px 70px;
     border-radius: 10px;
+    position: relative;
+}
+
+.todo-header{
+    position: fixed;
+    background-color: #fff;
+    z-index: 1;
 }
 
 .todo-title{
-    margin: 0 0 20px 10px;
+    /* margin: 0 0 20px 10px; */
     color:#1E3050;
 }
 
@@ -80,6 +90,10 @@ button:hover{
     color: rgb(243, 199, 6);
 }
 
+ul{
+    margin-top: 134px;
+}
+
 ul li{
     list-style: none;
     font-size: 17px;
@@ -87,6 +101,7 @@ ul li{
     user-select: none;
     cursor: pointer;
     position: relative;
+    
 }
 
 ul li::before{

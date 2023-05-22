@@ -1,148 +1,114 @@
-const inputBox = document.getElementById('input-box');
-const listContainer = document.getElementById('list-container');
+window.addEventListener("load", () => {
+    const form = document.getElementById("add-todo-form");
+    const inputBox = document.getElementById("input-box");
+    const listContainer = document.getElementById("list-container");
+    const pendingNum = document.querySelector(".pending-num");
 
-window.addEventListener('load', () => {
-    const form = document.querySelector('form');
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      addTask();
-    });
-  });
 
-  inputBox.addEventListener("keyup", function(event) {
-    if (event.keyCode === 13) { // 13 is the keycode for "Enter"
-      event.preventDefault();
-      addTask();
+    const tasksFromStorage = localStorage.getItem("tasks");
+
+    let tasks = tasksFromStorage ? JSON.parse(tasksFromStorage) : [];
+
+    
+
+    pendingNum.textContent = tasks.length === 0 ? "no" : tasks.length;
+
+    const createTask = (task) => {
+    const { id, value, isDone } = task;
+
+    const li = document.createElement("li");
+        li.setAttribute("data-id", id);
+        li.textContent = value;
+
+    if (isDone) {
+        li.classList.toggle("checked");
     }
-})
 
-const addNewTask = (newTask) => {
-  const li = document.createElement('li');
-  li.dataset.id = newTask.id;
-  li.textContent = newTask.value;
-  li.classList.toggle('editing', newTask.isEditing);
+    listContainer.appendChild(li);
 
-  const span = document.createElement('span');
-  span.innerHTML = '\u00d7';
-  li.appendChild(span);
-
-    const spanEdit = document.createElement('span');
-    spanEdit.innerHTML = '<i class="fas fa-edit"></i>'; // добавление иконки редактирования
-    spanEdit.className = 'edit';
-    li.appendChild(spanEdit);
-
-  listContainer.appendChild(li);
-};
-
-const addTask = () => {
-  if (inputBox.value === '') {
-    alert('Warning! You must write something!');
-  } else {
-    const newTask = {
-      id: new Date().getMilliseconds().toString(),
-      value: inputBox.value,
-      isEditing: false,
+    const span = document.createElement("span");
+        span.innerHTML = "\u00d7";
+        li.appendChild(span);
     };
 
-    addNewTask(newTask);
+    const generateTasksList = () => {
+        tasks.forEach((task) => {
+        createTask(task);
+        });
+    };
 
-    inputBox.value = '';
-    saveData();
-  }
-};
+    generateTasksList();
 
-listContainer.addEventListener('click', (e) => {
-    const target = e.target;
-    switch (target.tagName) {
-      case 'LI':
-        target.classList.toggle('checked');
-        toggleChecked(target.getAttribute('data-id'));
-        break;
-      case 'SPAN':
-        if (target.classList.contains('edit')) { // если нажата иконка редактирования
-          const id = target.parentElement.getAttribute('data-id');
-          const taskText = target.parentElement.textContent.trim(); // получение текстового содержимого таски
-          const newTaskText = prompt('Enter new task text', taskText);
-          if (newTaskText !== null && newTaskText !== '') {
-            target.parentElement.textContent = newTaskText;
-            const tasks = getTasks();
-            const updatedTaskIndex = tasks.findIndex(task => task.id === id);
-            tasks[updatedTaskIndex].value = newTaskText;
+    const saveTasks = (tasks) => {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    };
+
+
+    const editTasks = (task) => {
+        const editTask = document.createElement('button')
+        editTask.classList.add('edit')
+        li.appendChild(editTask)
+    }
+    
+
+
+    const deleteTask = (taskId) => {
+        tasks = tasks.filter(({ id }) => id !== taskId);
+
+        saveTasks(tasks);
+    };
+
+    listContainer.addEventListener("click", (e) => {
+        const targetName = e.target.tagName;
+
+        switch (targetName) {
+    case "LI": {
+            const taskId = e.target.getAttribute("data-id");
+
+            const currentTask = tasks.find(({ id }) => id === taskId);
+
+            currentTask.isDone = !currentTask.isDone;
+
             saveTasks(tasks);
-          }
-        } else if (target.tagName === 'SPAN') { // если нажата иконка удаления
-          const id = target.parentElement.getAttribute('data-id');
-          target.parentElement.remove();
-          deleteTask(id);
-        }
-        break;
-    }
-  }, false);
 
-/* listContainer.addEventListener('dblclick', (e) => {
-  if (e.target.tagName === 'LI') {
-    const li = e.target;
-    const input = document.createElement('input');
-    input.value = li.textContent;
-    li.textContent = '';
-    li.appendChild(input);
-    input.focus();
-    li.classList.add('editing');
-    input.addEventListener('blur', () => {
-        li.classList.add('black')
-      li.removeChild(input);
-      li.textContent = input.value.trim();
-      li.classList.remove('editing');
-      const tasks = getTasks();
-      const updatedTasks = tasks.map(task => {
-        if (task.id === li.dataset.id) {
-          task.value = li.textContent;
+            e.target.classList.toggle("checked");
+
+            break;
         }
-        return task;
-      });
-      saveTasks(updatedTasks);
+
+    case "SPAN": {
+        const taskId = e.target.parentElement.getAttribute("data-id");
+
+        e.target.parentElement.remove();
+
+        deleteTask(taskId);
+
+            break;
+        }
+        }
     });
-  }
-}, false); */
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
 
-const removeTask = (id) => {
-  const tasks = getTasks();
-  const updatedTasks = tasks.filter(({id}) => id !== id);
-  saveTasks(updatedTasks);
-};
+    
+    if (inputBox.value === "") {
+        return alert("Warning! You must write something!");
+    }
 
-const getTasks = () => {
-  const tasksString = localStorage.getItem('tasks');
-  if (tasksString) {
-    return JSON.parse(tasksString);
-  }
-  return [];
-};
 
-const saveTasks = (tasks = []) => {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-};
+      
 
-const saveData = () => {
-  const tasks = listContainer.querySelectorAll('li');
-  const taskList = [];
-  tasks.forEach(task => {
-    const isEditing = task.classList.contains('editing');
-    const taskDetails = {
-      id: task.dataset.id,
-      value: task.textContent,
-      isEditing,
+    const newTask = {
+        id: crypto.randomUUID(),
+        value: inputBox.value,
+        isDone: false,
     };
-    taskList.push(taskDetails);
-  });
-  saveTasks(taskList);
-};
 
-const showTasks = () => {
-  const tasks = getTasks();
-  tasks.forEach((task) => {
-    addNewTask(task);
-  });
-};
+        createTask(newTask);
 
-showTasks();
+        tasks = [...tasks, newTask];
+        saveTasks(tasks);
+
+        inputBox.value = "";
+    });
+});
