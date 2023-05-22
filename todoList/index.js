@@ -9,6 +9,20 @@ window.addEventListener('load', () => {
   });
 });
 
+const createTaskElement = (task) => {
+    const li = document.createElement('li');
+    li.setAttribute('data-id', task.id);
+    li.textContent = task.value;
+    if (task.isChecked) {
+      li.classList.add('checked');
+    }
+  
+    const span = document.createElement('span');
+    span.innerHTML = '\u00d7';
+    li.appendChild(span);
+    listContainer.appendChild(li);
+  };
+
 const addTask = () => {
   if (inputBox.value === '') {
     alert('Warning! You must write something!');
@@ -19,16 +33,7 @@ const addTask = () => {
       isChecked: false
     };
 
-    const li = document.createElement('li');
-    li.setAttribute('data-id', newTask.id);
-    li.textContent = newTask.value;
-    listContainer.appendChild(li);
-
-    const span = document.createElement('span');
-    span.innerHTML = '\u00d7';
-    li.appendChild(span);
-    listContainer.appendChild(li);
-    
+    createTaskElement(newTask);    
     inputBox.value = '';
 
     saveData();
@@ -93,20 +98,10 @@ const saveData = () => {
 };
 
 const showTasks = () => {
-  const tasks = getTasks();
-  tasks.forEach((task) => {
-    const li = document.createElement('li');
-    li.setAttribute('data-id', task.id);
-    li.textContent = task.value;
-    if (task.isChecked) {
-      li.classList.add('checked');
-    }
-
-    const span = document.createElement('span');
-    span.innerHTML = '\u00d7';
-    li.appendChild(span);
-    listContainer.appendChild(li);
-  });
+    const tasks = getTasks();
+    tasks.forEach((task) => {
+      createTaskElement(task);
+    });
 };
 
 showTasks();
