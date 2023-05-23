@@ -73,7 +73,7 @@ const countTasks = () => {
 
 const updateTask = (taskId, el) => {
 
-    const currentTask = tasks.find(task => {task.id === parseInt(taskId)})
+    const task = tasks.find(task => {task.id === parseInt(taskId)})
 
     if (el.hasAttribute('contenteditable')) {
         task.name = el.textContent
