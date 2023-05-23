@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background-color: aliceblue;
+}
+
+.container{
+    padding: 10px;
+}
+
+.todo-app{
+    width: 100%;
+    max-height: 578px;
+    overflow: auto;
+    max-width: 580px;
+    background: #fff;
+    margin: 100px auto 20px;
+    padding: 10px 30px 0;
+    border-radius: 10px;
+    position: relative;
+}
+
+.form-container{
+    min-width: 490px;
+    display: flex;
+}
+
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1E3050;
+    border-radius: 15px;
+    padding-left: 10px;
+}
+
+input{
+    flex: 1;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: #fff;
+    padding: 10px;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+input::placeholder{
+    color: #ffffffa4;
+}
+
+button{
+    border: none;
+    outline: none;
+    padding: 16px 50px;
+    background-color: #1E3050;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 40px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+button:hover{
+    color: rgb(243, 199, 6);
+}
+
+.stats{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    width: 200px;
+    margin-bottom: 20px;
+}
+
+
+.todos{
+    margin-bottom: 4rem;
+}
+
+.todos li{
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    padding: .75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todos li div{
+    display: flex;
+    align-items: center;
+    gap: .75rem
+}
+
+.todos li.complete{
+    background-color: rgb(255, 240, 180);
+    color: rgb(255, 208, 0);
+}
+
+.todos li.complete span{
+    text-decoration: line-through;
+}
+
+input[type='checkbox']{
+    appearance: none;
+    background-color: transparent;
+    margin: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid black;
+    border-radius: 100%;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+input[type='checkbox']::before{
+    font-size: 28px;
+    font-family: "Font Awesome 5 Free";
+    content: "\f058";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    color: #f3c706;
+    font-weight: 900;
+    transform: scale(0);
+}
+
+input[type='checkbox']:checked{
+    font-size: 28px;
+    font-family: "Font Awesome 5 Free";
+    content: "\f111";
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    color: #f3c706;
+    font-weight: 900;
+}
+
+
+input[type='checkbox']:checked::before{
+    transform: scale(0.9);
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    overflow: hidden;
+}
+
+.todos li button{
+    width: 25px;
+    height: 25px;
+    font-size: 16px;
+    padding: 5px;
+    line-height: 40px;
+    text-align: center;
+    transition: 0.3s;
+    border-radius: 50%;
+    border: 0;
+    display: grid;
+    place-content: center;
+    background-color: transparent;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+    color: black;
+
+}
+
+.todos li button:hover {
+    color: #f3c706;
+}
+
+.todos li span{
+    padding: 2px;
+    border-radius: 5px;
+    transition: .4s;
+}
+
+.todos li span:focus{
+    background-color: rgba(255, 240, 180, 0.404);
+    outline: none;
+}
+
+.todos li span[contenteditable]:hover{
+    background-color: rgba(255, 240, 180, 0.658)
+}
