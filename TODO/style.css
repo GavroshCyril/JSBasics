@@ -1,197 +1,297 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --main-color: #1e3050;
+    --accent-color: #f3c706;
+    --light-accent-color: #fff0b4;
+    --white: #FFFF;
+    --black: #000000;
+  }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
-body{
-    font-family: 'Poppins', sans-serif;
-    background-color: aliceblue;
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: #f0f8ff;
 }
 
-.container{
-    padding: 10px;
-}
-
-.todo-app{
-    width: 100%;
-    max-height: 578px;
-    overflow: auto;
-    max-width: 580px;
-    background: #fff;
-    margin: 100px auto 20px;
-    padding: 10px 30px 0;
-    border-radius: 10px;
-    position: relative;
-}
-
-.form-container{
-    min-width: 490px;
-    display: flex;
-}
-
-.row{
+#modal-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: #1E3050;
-    border-radius: 15px;
-    padding-left: 10px;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 14px;
+    background-color: rgba(0, 0, 0, 0.541);
+    display: none;
+    opacity: 0;
+    z-index: 999;
+    transition: opacity 0.3s ease-in-out;
 }
 
-input{
-    flex: 1;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    color: #fff;
-    padding: 10px;
-    font-weight: 500;
-    font-size: 16px;
-}
-
-input::placeholder{
-    color: #ffffffa4;
-}
-
-button{
-    border: none;
-    outline: none;
-    padding: 16px 50px;
-    background-color: #1E3050;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 40px;
-    font-weight: 700;
-    transition: 0.3s;
-}
-
-button:hover{
-    color: rgb(243, 199, 6);
-}
-
-.stats{
+#modal-overlay #modal {
+    position: relative;
+    max-width: 650px;
+    width: 100%;
+    background: var(--white);
+    height: 340px;
+    border-radius: 10px;
     display: flex;
-    list-style: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+    margin: 0 auto;
+    padding: 10px;
+    box-shadow: rgba(66, 66, 73, 0.781) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.modal-header{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.modal-img-container{
+    max-width: 300px;
+}
+.modal-img{
+    width: 100%;
+}
+
+#modal-overlay #modal .modal-footer {
+    margin-top: auto;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    transition: .3s ease-in-out;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: var(--black);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  #warning{
+    font-weight: 600;
+  }
+
+.container {
+  padding: 10px;
+}
+
+.content{
+    display: flex;
     justify-content: space-between;
-    width: 200px;
+    align-items: center;
+}
+
+.content .day{
+    color: var(--main-color);
+}
+
+.title{
+    font-size: 32px;
+    color: var(--main-color);
+}
+
+.empty-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-bottom: 20px;
 }
 
-
-.todos{
-    margin-bottom: 4rem;
+.empty-img{
+    height: 240px;
+    margin-bottom: 20px;
 }
 
-.todos li{
-    background-color: rgb(255, 255, 255);
-    border-radius: 10px;
-    margin-bottom: 1rem;
-    padding: .75rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.span-title{
+    font-weight: 500;
 }
 
-.todos li div{
-    display: flex;
-    align-items: center;
-    gap: .75rem
+.span-desc{
+    font-size: 12px;
 }
 
-.todos li.complete{
-    background-color: rgb(255, 240, 180);
-    color: rgb(255, 208, 0);
+.hide{
+    display: none;
 }
 
-.todos li.complete span{
-    text-decoration: line-through;
+.todo-app {
+  width: 100%;
+  max-height: 578px;
+  overflow: auto;
+  max-width: 580px;
+  background: var(--white);
+  margin: 100px auto 20px;
+  padding: 10px 30px 0;
+  border-radius: 10px;
+  position: relative;
 }
 
-input[type='checkbox']{
-    appearance: none;
-    background-color: transparent;
-    margin: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 2px solid black;
-    border-radius: 100%;
-    display: grid;
-    place-content: center;
-    cursor: pointer;
-    position: relative;
+.form-container {
+  min-width: 490px;
+  display: flex;
 }
 
-input[type='checkbox']::before{
-    font-size: 28px;
-    font-family: "Font Awesome 5 Free";
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--main-color);
+  border-radius: 15px;
+  padding-left: 10px;
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--white);
+  padding: 10px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+input::placeholder {
+  color: #ffffffa4;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: 16px 50px;
+  background-color: var(--main-color);
+  color: var(--white);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 40px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+button:hover {
+  color: var(--accent-color);
+}
+
+.stats {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  width: 200px;
+  margin-bottom: 20px;
+}
+
+.todos {
+  margin-bottom: 4rem;
+}
+
+.todos li {
+  background-color: var(--white);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todos li div {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.todos li.complete {
+  background-color: var(--light-accent-color);
+  color: var(--accent-color);
+}
+
+.todos li.complete span {
+  text-decoration: line-through;
+}
+
+input[type="checkbox"] {
+  position: relative;
+  appearance: none;
+  cursor: pointer;
+  margin: 0;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--accent-color);
+  border-radius: 50%;
+}
+
+input[type="checkbox"]::before {
     content: "\f058";
-    display: inline-block;
-    padding-right: 3px;
-    vertical-align: middle;
-    color: #f3c706;
-    font-weight: 900;
-    transform: scale(0);
-}
-
-input[type='checkbox']:checked{
-    font-size: 28px;
-    font-family: "Font Awesome 5 Free";
-    content: "\f111";
-    display: inline-block;
-    padding-right: 3px;
-    vertical-align: middle;
-    color: #f3c706;
-    font-weight: 900;
-}
-
-
-input[type='checkbox']:checked::before{
-    transform: scale(0.9);
     position: absolute;
-    top: -4px;
-    left: -4px;
+    top: 50%;
+    left: 50%;
+    color: var(--accent-color);
+    font-size: 22px;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    display: inline-block;
+    transition: 0.3s;
     overflow: hidden;
+    transform: translate(-50%, -50%) scale(0);
 }
 
-.todos li button{
-    width: 25px;
-    height: 25px;
-    font-size: 16px;
-    padding: 5px;
-    line-height: 40px;
+input[type="checkbox"]:checked::before {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.todos li button {
+    cursor: pointer;
+    display: grid;
+    color: var(--black);
+    width: 24x;
+    height: 24px;
+    padding: 4px;
     text-align: center;
-    transition: 0.3s;
+    font-size: 16px;
+    line-height: 2.2;
+    background-color: transparent;
     border-radius: 50%;
     border: 0;
-    display: grid;
     place-content: center;
-    background-color: transparent;
-    cursor: pointer;
-    transition: .3s ease-in-out;
-    color: black;
-
+    transition: 0.3s ease-in-out;
 }
 
 .todos li button:hover {
-    color: #f3c706;
+  color: var(--accent-color);
 }
 
-.todos li span{
-    padding: 2px;
-    border-radius: 5px;
-    transition: .4s;
+.todos li span {
+  padding: 2px;
+  border-radius: 5px;
+  transition: 0.3s;
 }
 
-.todos li span:focus{
-    background-color: rgba(255, 240, 180, 0.404);
-    outline: none;
+.todos li span:focus {
+  outline: none;
+  background-color: #fff0b467;
 }
 
-.todos li span[contenteditable]:hover{
-    background-color: rgba(255, 240, 180, 0.658)
+.todos li span[contenteditable]:hover {
+  background-color: var(--light-accent-color);
 }

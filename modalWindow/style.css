@@ -7,7 +7,6 @@
 }
 
 #modal-overlay{
-    /* аа */
     position: fixed;
     top: 0;
     left: 0;
@@ -26,13 +25,18 @@
 }
 
 #modal-overlay #modal {
+    position: relative;
     max-width: 650px;
     width: 100%;
     background: white;
-    height: 400px;
+    height: 290px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+   
+    margin: 0 auto;
     padding: 10px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
@@ -40,6 +44,10 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 30px;
+}
+
+.modal-img-container{
+    max-width: 300px;
 }
 .modal-img{
     width: 100%;
@@ -49,21 +57,21 @@
     margin-top: auto;
 }
 
-button {
-    padding: 10px 50px;
-    font-size: 17px;
-    background: #ea3d26;
-    color: white;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    transition: 0.2s;
-}
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-button:hover {
-    background: rgba(0, 0, 0, 0.7);
-}
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
 #open-modal{
     width: 10vw;
