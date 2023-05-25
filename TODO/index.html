@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="shortcut icon" href="icon.svg" type="image/x-icon">
 </head>
-<body>
+<body class="light">
+  
    
     
     <div class="todo-app">
@@ -25,6 +26,7 @@
                 <input type="text" class="task-name" placeholder="Add new task" autofocus>
                 <button id="open-modal">Add</button>
             </form>
+            
         </div>
         </div>
     </header>
@@ -32,17 +34,18 @@
 
     <section>
         <div class="container" id="main-content">
-            <ul class="stats">
-              
+            <ul class="stats filters" data-lists>
+                    <li id="all" class="filer-task filter-item-active all">All</li> 
+                    <li id="pending" class="filer-task active">Pending</li> 
+                    <li id="completed" class="filer-task completed">Completed</li>
+        
+            </ul>
+         
+            <ul> 
                 <li>
-                    <span>Completed:</span>
-                    <span id="completed-tasks">0</span>
-                </li>
-                <li>
-                    <span>Total:</span>
+                    <span>Total tasks:</span>
                     <span id="total-tasks">0</span>
                 </li>
-               
             </ul>
 
             <ul class="todos">

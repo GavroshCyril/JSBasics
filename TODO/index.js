@@ -2,10 +2,10 @@ window.addEventListener("load", () => {
     const todoForm = document.querySelector("#todo-form");
     const todoList = document.querySelector(".todos");
     const totalTasks = document.querySelector("#total-tasks");
-    const completedTasks = document.querySelector("#completed-tasks");
     const mainInput = document.querySelector("#todo-form input"); 
     const emptyContainer = document.querySelector(".empty-container"); 
-    
+    const filters = document.querySelectorAll('.filters li')
+
     // display date 
     const today = new Date()
     const day = today.getDay()
@@ -15,6 +15,8 @@ window.addEventListener("load", () => {
  
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+      
+
     const checkContent = () => {
         if (tasks.length > 0) {
             emptyContainer.style.display = 'none';
@@ -22,10 +24,9 @@ window.addEventListener("load", () => {
             emptyContainer.style.display = 'flex';
           }
     }
-  
-    const createTask = (task) => {
 
-       
+  
+    const createTask = (task, filter) => {
 
       const taskElement = document.createElement("li");
   
@@ -34,21 +35,27 @@ window.addEventListener("load", () => {
       if (task.isCompleted) {
         taskElement.classList.add("complete");
       }
-  
-      const taskElementHTML = `
-          <div>
-              <input type="checkbox" name="tasks" id='${task.id}' ${
-        task.isCompleted ? "checked" : ""
-      }>
-              <span ${!task.isCompleted ? "contenteditable" : ""} >${task.name}</span>
+
+
+
+      
+
+        const taskElementHTML = `
+        <div class="tasks__item">
+            <input type="checkbox" name="tasks" id='${task.id}' ${
+      task.isCompleted ? "checked" : ""
+    }>
+            <span ${!task.isCompleted ? "contenteditable" : ""} >${task.name}</span>
+        </div>
+          <div class="buttons">
+            <button class="edit-task"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button class="remove-task"><i class="fa-solid fa-xmark"></i></button>
           </div>
+    `;
+
+    taskElement.innerHTML = taskElementHTML;
   
-          <button class="remove-task"><i class="fa-solid fa-xmark"></i></button>
-      `;
-  
-      taskElement.innerHTML = taskElementHTML;
-  
-      todoList.appendChild(taskElement);
+    todoList.appendChild(taskElement);
   
       mainInput.value = "";
       checkContent()
@@ -62,18 +69,17 @@ window.addEventListener("load", () => {
     }
   
     const countTasks = () => {
-      const completedTasksArr = tasks.filter((task) => task.isCompleted);
-  
       totalTasks.textContent = tasks.length;
-      completedTasks.textContent = completedTasksArr.length;
     };
   
     countTasks();
   
     const updateTask = (e) => {
       const el = e.target;
+      console.log(el.classList.contains('edit-task'));
+
       const taskId = el.closest("li").id;
-  
+      
       const task = tasks.find((task) => task.id === Number(taskId));
   
       if (!task) {
@@ -91,11 +97,9 @@ window.addEventListener("load", () => {
         if (task.isCompleted) {
           span.removeAttribute("contenteditable");
           parent.classList.toggle("complete");
-          completedTasks.textContent = ++completedTasks.textContent;
         } else {
           span.setAttribute("contenteditable", "true");
           parent.classList.toggle("complete");
-          completedTasks.textContent = --completedTasks.textContent;
         }
       }
   
@@ -104,14 +108,12 @@ window.addEventListener("load", () => {
   
     const removeTask = (e) => {
       const el = e.target;
-  
+      
       if (
         el.classList.contains("remove-task") ||
         el.parentElement.classList.contains("remove-task")
       ) {
         const taskId = el.closest("li").id;
-  
-        console.log(taskId);
   
         tasks = tasks.filter((task) => task.id !== Number(taskId));
   
@@ -138,6 +140,7 @@ window.addEventListener("load", () => {
         id: new Date().getMilliseconds(),
         name: inputValue,
         isCompleted: false,
+        status: 'pending'
       };
   
       tasks.push(task);
@@ -149,6 +152,8 @@ window.addEventListener("load", () => {
       mainInput.focus();
     });
   
+    
+
     todoList.addEventListener("click", removeTask);
   
     todoList.addEventListener("input", updateTask);
@@ -160,11 +165,12 @@ window.addEventListener("load", () => {
       }
     });
 
-    
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('li.filter-item-active').classList.remove('filter-item-active')
+        btn.classList.add("filter-item-active")
+        createTask(task.id)
+      })
+    })
 
-
-
-  
-
- 
   });

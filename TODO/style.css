@@ -14,6 +14,22 @@
   box-sizing: border-box;
 }
 
+ul{
+  list-style: none;
+}
+
+.todo-app::-webkit-scrollbar{
+  width: 8px;
+}
+.todo-app::-webkit-scrollbar-thumb{
+  background-color: var(--accent-color);
+}
+
+.todo-app::-webkit-scrollbar-track{
+  background-color: var(--main-color);
+}
+
+
 body {
   font-family: "Poppins", sans-serif;
   background-color: #f0f8ff;
@@ -26,31 +42,30 @@ body {
     width: 100vw;
     height: 100vh;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    padding: 14px;
-    background-color: rgba(0, 0, 0, 0.541);
     display: none;
-    opacity: 0;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
     z-index: 999;
+    padding: 14px;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.541);
     transition: opacity 0.3s ease-in-out;
 }
 
 #modal-overlay #modal {
     position: relative;
+    margin: 0 auto;
+    padding: 10px;
     max-width: 650px;
     width: 100%;
-    background: var(--white);
     height: 340px;
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-   
-    margin: 0 auto;
-    padding: 10px;
+    background: var(--white);
+    border-radius: 10px;
     box-shadow: rgba(66, 66, 73, 0.781) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .modal-header{
@@ -71,105 +86,106 @@ body {
 }
 
 .close {
-    color: #aaa;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 28px;
-    font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #aaa;
     transition: .3s ease-in-out;
-  }
+}
 
-  .close:hover,
-  .close:focus {
-    color: var(--black);
-    text-decoration: none;
-    cursor: pointer;
-  }
+.close:hover,
+.close:focus {
+  cursor: pointer;
+  color: var(--black);
+  text-decoration: none;
+}
 
-  #warning{
-    font-weight: 600;
-  }
+#warning{
+  font-weight: 600;
+}
 
 .container {
   padding: 10px;
 }
 
 .content{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .content .day{
-    color: var(--main-color);
+  color: var(--main-color);
 }
 
 .title{
-    font-size: 32px;
-    color: var(--main-color);
+  font-size: 32px;
+  color: var(--main-color);
 }
 
 .empty-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .empty-img{
-    height: 240px;
-    margin-bottom: 20px;
+  height: 240px;
+  margin-bottom: 20px;
 }
 
 .span-title{
-    font-weight: 500;
+  font-size: 26px;
+  font-weight: 500;
 }
 
 .span-desc{
-    font-size: 12px;
+  font-size: 16px;
 }
 
 .hide{
-    display: none;
+  display: none;
 }
 
 .todo-app {
-  width: 100%;
-  max-height: 578px;
-  overflow: auto;
-  max-width: 580px;
-  background: var(--white);
-  margin: 100px auto 20px;
-  padding: 10px 30px 0;
-  border-radius: 10px;
   position: relative;
+  overflow: auto;
+  width: 100%;
+  padding: 10px 30px 0;
+  margin: 100px auto 20px;
+  max-height: 740px;
+  max-width: 700px;
+  background: var(--white);
+  border-radius: 10px;
 }
 
 .form-container {
-  min-width: 490px;
   display: flex;
+  width: 100%;
 }
 
 .row {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
   background: var(--main-color);
   border-radius: 15px;
-  padding-left: 10px;
 }
 
 input {
   flex: 1;
   border: none;
   outline: none;
-  background-color: transparent;
-  color: var(--white);
   padding: 10px;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 22px;
+  color: var(--white);
+  background-color: transparent;
 }
 
 input::placeholder {
@@ -177,16 +193,16 @@ input::placeholder {
 }
 
 button {
+  cursor: pointer;
   border: none;
   outline: none;
   padding: 16px 50px;
+  font-size: 22px;
+  font-weight: 700;
   background-color: var(--main-color);
   color: var(--white);
-  font-size: 16px;
-  cursor: pointer;
   border-radius: 40px;
-  font-weight: 700;
-  transition: 0.3s;
+  transition: .3s;
 }
 
 button:hover {
@@ -195,35 +211,51 @@ button:hover {
 
 .stats {
   display: flex;
-  list-style: none;
   justify-content: space-between;
-  width: 200px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  list-style: none;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  max-width: 290px;
+}
+
+.filer-task{
+  cursor: pointer;
+}
+
+.filter-item-active{
+  font-weight: 500;
+  color: var(--white);
+  padding: 0 10px;
+  margin: 0 -10px;
+  background-color: var(--accent-color);
+  border-radius: 10px;
 }
 
 .todos {
-  margin-bottom: 4rem;
+  margin-bottom: 64px;
 }
 
 .todos li {
-  background-color: var(--white);
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  padding: 0.8rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: var(--white);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  padding: 12.8px 16px;
 }
 
 .todos li div {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 12.8px;
 }
 
 .todos li.complete {
+  color: var(--accent-color); 
   background-color: var(--light-accent-color);
-  color: var(--accent-color);
 }
 
 .todos li.complete span {
@@ -231,14 +263,14 @@ button:hover {
 }
 
 input[type="checkbox"] {
-  position: relative;
-  appearance: none;
   cursor: pointer;
+  position: relative;
   margin: 0;
   width: 22px;
   height: 22px;
   border: 2px solid var(--accent-color);
   border-radius: 50%;
+  appearance: none;
 }
 
 input[type="checkbox"]::before {
@@ -263,13 +295,13 @@ input[type="checkbox"]:checked::before {
 .todos li button {
     cursor: pointer;
     display: grid;
-    color: var(--black);
     width: 24x;
     height: 24px;
     padding: 4px;
     text-align: center;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 2.2;
+    color: var(--black);
     background-color: transparent;
     border-radius: 50%;
     border: 0;
@@ -282,8 +314,9 @@ input[type="checkbox"]:checked::before {
 }
 
 .todos li span {
-  padding: 2px;
+  font-size: 24px;
   border-radius: 5px;
+  padding: 2px;
   transition: 0.3s;
 }
 
