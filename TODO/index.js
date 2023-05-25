@@ -31,18 +31,26 @@ window.addEventListener("load", () => {
           }
     }
 
-    const createTask = (task, filter) => {
+    const createTask = (task) => {
 
       const taskElement = document.createElement("li");
   
       taskElement.setAttribute("id", task.id);
+      taskElement.setAttribute("data-status", task.status);
   
-      if (task.isCompleted) {
+
+      if (task.isCompleted ) {
+
         taskElement.classList.add("complete");
+        task.status = 'completed';
+
+      } else {
+        task.status = 'pending';
       }
 
         const taskElementHTML = `
-        <div class="tasks__item">
+        
+        <div class="tasks__item"">
             <input type="checkbox" name="tasks" id='${task.id}' ${
       task.isCompleted ? "checked" : ""
     }>
@@ -55,12 +63,10 @@ window.addEventListener("load", () => {
     `;
 
     taskElement.innerHTML = taskElementHTML;
-  
     todoList.appendChild(taskElement);
   
       mainInput.value = "";
       checkContent()
-      
     };
   
     if (localStorage.getItem("tasks")) {
@@ -134,6 +140,55 @@ window.addEventListener("load", () => {
       checkContent();
   });
 
+  // FILTRATION.......................................................
+
+  filters.forEach((filter) => {
+    filter.addEventListener("click", () => {
+
+      const selectedFilter = filter.getAttribute("id");
+      const statusValue = (selectedFilter === "pending") ? "pending" :
+      (selectedFilter === "completed") ? "complete" : "";
+
+
+      filters.forEach((f) => {
+        f.classList.remove("filter-item-active");
+      });
+      filter.classList.add("filter-item-active");
+
+
+      //фильтрация
+      const allTasks = document.querySelectorAll(".todos li");
+
+      allTasks.forEach((task) => {
+        const taskStatus = task.getAttribute("data-status");
+        switch (selectedFilter) {
+         
+          // фильтр "все таски"
+            case "all":
+              console.log(taskStatus);
+            task.style.display = "flex";
+            break;
+
+             // фильтр незавершенных тасков
+             case "pending":
+              if (taskStatus === "pending") {
+                task.style.display = "flex";
+              } else {
+                task.style.display = "none";
+              }
+              break;
+            case "completed":
+              if (taskStatus === "complete") {
+                task.style.display = "flex";
+              } else {
+                task.style.display = "none";
+              }
+              break;
+        }
+      }); 
+    });
+  });
+
     todoForm.addEventListener("submit", (e) => {
       e.preventDefault();
   
@@ -179,7 +234,7 @@ window.addEventListener("load", () => {
         id: new Date().getMilliseconds(),
         name: inputValue,
         isCompleted: false,
-        status: 'pending'
+        status: statusValue,
       };
   
       tasks.push(task);
@@ -190,7 +245,7 @@ window.addEventListener("load", () => {
   
       mainInput.focus();
     });
-  
+
     todoList.addEventListener("click", (e) => {
       if (e.target.classList.contains("edit-task") || e.target.parentElement.classList.contains("edit-task")) {
         const taskEl = e.target.closest("li");
@@ -216,9 +271,8 @@ window.addEventListener("load", () => {
     });
 
     todoList.addEventListener("click", removeTask);
-  
     todoList.addEventListener("input", updateTask);
-  
+    
     todoList.addEventListener("keydown", (e) => {
       if (e.keyCode == 13) {
         e.preventDefault();
@@ -226,12 +280,5 @@ window.addEventListener("load", () => {
       }
     });
 
-    filters.forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelector('li.filter-item-active').classList.remove('filter-item-active')
-        btn.classList.add("filter-item-active")
-        createTask(task.id)
-      })
-    })
 
   });

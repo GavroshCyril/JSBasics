@@ -6,6 +6,7 @@
     --light-accent-color: #fff0b4;
     --white: #FFFF;
     --black: #000000;
+    --background-color: #f0f8ff;
   }
 
 * {
@@ -32,7 +33,7 @@ ul{
 
 body {
   font-family: "Poppins", sans-serif;
-  background-color: #f0f8ff;
+  background-color: var(--background-color);
 }
 
 .container {
@@ -43,6 +44,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: start;
+  margin-bottom: 20px;
 }
 
 .list-wrapper{
@@ -160,6 +162,10 @@ input::placeholder {
   margin-bottom: 10px;
 }
 
+.tasks__item span{
+  max-width: 472px;
+}
+
 .clear-btn{
   cursor: not-allowed;
   font-family: "Poppins", sans-serif;
@@ -194,7 +200,7 @@ input::placeholder {
   align-items: center;
   background-color: var(--white);
   border-radius: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   padding: 12.8px 16px;
 }
 
