@@ -161,19 +161,14 @@ input::placeholder {
 }
 
 .clear-btn{
-  cursor: pointer;
+  cursor: not-allowed;
   font-family: "Poppins", sans-serif;
   font-size: 20px;
   font-weight: 500;
   border: none;
   background-color: transparent;
-  border-bottom: 2px solid var(--main-color);
-  transition: .2s;
-}
-
-.clear-btn:hover{
-  color: var(--accent-color);
-  border-bottom: 2px solid  var(--accent-color);
+  color: grey;
+  border-bottom: 2px solid  grey;
 }
 
 .filer-task{

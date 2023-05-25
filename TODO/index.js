@@ -16,17 +16,21 @@ window.addEventListener("load", () => {
  
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-      
-
     const checkContent = () => {
         if (tasks.length > 0) {
             emptyContainer.style.display = 'none';
+            clearAll.disabled = false;
+            clearAll.style.color = "black";
+            clearAll.style.borderBottom = '2px solid black'
+            clearAll.style.cursor = 'pointer'
           } else {
             emptyContainer.style.display = 'flex';
+            clearAll.style.color = "grey";
+            clearAll.style.borderBottom = '2px solid grey'
+            clearAll.style.cursor = 'not-allowed'
           }
     }
 
-  
     const createTask = (task, filter) => {
 
       const taskElement = document.createElement("li");
@@ -73,7 +77,6 @@ window.addEventListener("load", () => {
   
     const updateTask = (e) => {
       const el = e.target;
-      console.log(el.classList.contains('edit-task'));
 
       const taskId = el.closest("li").id;
       
@@ -188,7 +191,29 @@ window.addEventListener("load", () => {
       mainInput.focus();
     });
   
+    todoList.addEventListener("click", (e) => {
+      if (e.target.classList.contains("edit-task") || e.target.parentElement.classList.contains("edit-task")) {
+        const taskEl = e.target.closest("li");
+        const span = taskEl.querySelector("span");
+        
+        span.setAttribute("contenteditable", "true");
+        span.focus();
     
+        span.addEventListener("keydown", (e) => {
+          if (e.keyCode === 13) {
+            e.preventDefault();
+            span.blur();
+          }
+        });
+    
+        span.addEventListener("blur", () => {
+          span.removeAttribute("contenteditable");
+          const task = tasks.find((task) => task.id === Number(taskEl.id));
+          task.name = span.textContent;
+          localStorage.setItem("tasks", JSON.stringify(tasks));
+        });
+      }
+    });
 
     todoList.addEventListener("click", removeTask);
   
