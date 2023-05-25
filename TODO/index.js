@@ -5,6 +5,7 @@ window.addEventListener("load", () => {
     const mainInput = document.querySelector("#todo-form input"); 
     const emptyContainer = document.querySelector(".empty-container"); 
     const filters = document.querySelectorAll('.filters li')
+    const clearAll = document.querySelector('.clear-btn')
 
     // display date 
     const today = new Date()
@@ -35,10 +36,6 @@ window.addEventListener("load", () => {
       if (task.isCompleted) {
         taskElement.classList.add("complete");
       }
-
-
-
-      
 
         const taskElementHTML = `
         <div class="tasks__item">
@@ -125,15 +122,54 @@ window.addEventListener("load", () => {
         checkContent()
       }
     };
-  
+
+    clearAll.addEventListener('click', () => {
+      tasks = [];
+      localStorage.removeItem('tasks');
+      todoList.innerHTML = "";
+      totalTasks.textContent = 0;
+      checkContent();
+  });
+
     todoForm.addEventListener("submit", (e) => {
       e.preventDefault();
   
-      
       const inputValue = mainInput.value;
   
-      if (inputValue === "") {
-        return alert("Warning! You must write something!");
+      if(inputValue===""){
+        const modal = document.createElement('div');
+        modal.innerHTML = `
+          <div class="modal-bg">
+            <div class="modal">
+              <h2>Error</h2>
+              <p>You didn't enter anything! Please fill in the input field.</p>
+              <button class="modal-close">&times;</button>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        const modalCloseBtn = document.querySelector('.modal-close');
+        const modalBg = document.querySelector('.modal-bg');
+        modalBg.style.opacity = 0;
+        modalBg.style.transition = 'opacity 0.3s ease';
+        modalBg.addEventListener('click', (e) => {
+          if (e.target.classList.contains('modal-bg')) {
+            modalBg.style.opacity = 0;
+            setTimeout(() => {
+              modal.remove();
+            }, 400);
+          }
+        });
+        setTimeout(() => {
+          modalBg.style.opacity = 1;
+        }, 40);
+        modalCloseBtn.addEventListener('click', () => {
+          modalBg.style.opacity = 0;
+          setTimeout(() => {
+            modal.remove();
+          }, 400);
+        });
+        return;
       }
   
       const task = {
