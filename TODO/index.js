@@ -187,21 +187,27 @@ window.addEventListener("load", () => {
     checkContent();
   });
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentState = urlParams.get('state');
+
   // FILTRATION.......................................................
 
   filters.forEach((filter) => {
     filter.addEventListener("click", () => {
-      const selectedFilter = filter.getAttribute("id");
+
+      const selectedFilter = filter.getAttribute('id');
+
+      urlParams.set('state', selectedFilter);
+    
+      window.history.pushState({}, '', `?${urlParams}`);
 
       filterValue = selectedFilter;
 
-      filters.forEach((f) => {
-        f.classList.remove("filter-item-active");
-      });
-      filter.classList.add("filter-item-active");
+      filters.forEach(el => el.classList.remove('filter-item-active'));
+      filter.classList.add('filter-item-active');
+
 
       //фильтрация
-
       tasks.forEach((task) => {
         const currentTaskNode = document.getElementById(task.id);
 
@@ -228,6 +234,12 @@ window.addEventListener("load", () => {
             break;
         }
       });
+
+      if (currentState === selectedFilter) {
+        // если да, то устанавливаем соответствующий класс
+        filter.classList.add('filter-item-active');
+      }
+
 
       checkContent();
     });
