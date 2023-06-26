@@ -6,10 +6,17 @@ window.addEventListener("load", () => {
   const emptyContainer = document.querySelector(".empty-container");
   const filters = document.querySelectorAll(".filters li");
   const clearAll = document.querySelector(".clear-btn");
+  const searchInput = document.querySelector("#search-input");
+  const clearInputBtn = document.querySelector("#clear-input-btn");
 
   // display date
   const today = new Date();
-  const options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+  const options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
   const formattedCurrentDate = today.toLocaleDateString("en-US", options);
 
   document.querySelector(".day").innerHTML = formattedCurrentDate;
@@ -91,7 +98,9 @@ window.addEventListener("load", () => {
             <input type="checkbox" name="tasks" id='${task.id}' ${
       task.isCompleted ? "checked" : ""
     }>
-            <span ${!task.isCompleted ? "contenteditable" : ""} >${task.name}</span>
+            <span ${!task.isCompleted ? "contenteditable" : ""} >${
+      task.name
+    }</span>
         </div>
           <div class="buttons">
             <button class="edit-task"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -188,24 +197,45 @@ window.addEventListener("load", () => {
   });
 
   const urlParams = new URLSearchParams(window.location.search);
-  const currentState = urlParams.get('state');
+  const currentState = urlParams.get("state");
+
+  const filterTasks = () => {
+    const searchValue = searchInput.value.trim().toLowerCase();
+
+    tasks.forEach((task) => {
+      const taskElement = document.getElementById(task.id);
+
+      if (task.name.toLowerCase().includes(searchValue)) {
+        taskElement.style.display = "flex";
+      } else {
+        taskElement.style.display = "none";
+      }
+    });
+
+    if (searchValue === "") {
+      tasks.forEach((task) => {
+        const taskElement = document.getElementById(task.id);
+        taskElement.style.display = "flex";
+      });
+    }
+
+    checkContent();
+  };
 
   // FILTRATION.......................................................
 
   filters.forEach((filter) => {
     filter.addEventListener("click", () => {
+      const selectedFilter = filter.getAttribute("id");
 
-      const selectedFilter = filter.getAttribute('id');
+      urlParams.set("state", selectedFilter);
 
-      urlParams.set('state', selectedFilter);
-    
-      window.history.pushState({}, '', `?${urlParams}`);
+      window.history.pushState({}, "", `?${urlParams}`);
 
       filterValue = selectedFilter;
 
-      filters.forEach(el => el.classList.remove('filter-item-active'));
-      filter.classList.add('filter-item-active');
-
+      filters.forEach((el) => el.classList.remove("filter-item-active"));
+      filter.classList.add("filter-item-active");
 
       //фильтрация
       tasks.forEach((task) => {
@@ -237,9 +267,8 @@ window.addEventListener("load", () => {
 
       if (currentState === selectedFilter) {
         // если да, то устанавливаем соответствующий класс
-        filter.classList.add('filter-item-active');
+        filter.classList.add("filter-item-active");
       }
-
 
       checkContent();
     });
@@ -332,6 +361,17 @@ window.addEventListener("load", () => {
 
   todoList.addEventListener("click", removeTask);
   todoList.addEventListener("input", updateTask);
+  searchInput.addEventListener("input", filterTasks);
+
+  clearInputBtn.addEventListener("click", () => {
+    searchInput.value = "";
+    filterTasks();
+  });
+
+  searchInput.addEventListener("input", () => {
+    clearInputBtn.style.display = searchInput.value ? "block" : "none";
+    filterTasks();
+  });
 
   todoList.addEventListener("keydown", (e) => {
     if (e.keyCode == 13) {

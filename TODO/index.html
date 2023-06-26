@@ -1,70 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Just DO IT</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="shortcut icon" href="./to-do-list.png" type="image/x-icon" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Just DO IT</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="shortcut icon" href="./to-do-list.png" type="image/x-icon">
-</head>
+  <body class="light">
+    <nav class="nav">
+      <span class="nav-item">
+        <i class="fa-sharp fa-solid fa-house"></i> Home</span
+      >
 
-<body class="light">
-
-  <div class="todo-app">
-    <header id="main-header">
-      <div class="container">
-        <div class="content">
-          <h2 class="title">To-Do List <i class="fa-solid fa-circle-check"></i></h2>
-          <span class="day"></span>
-        </div>
-
-        <div class="row">
-          <form class="form-container" id="todo-form">
-            <input type="text" class="task-name" placeholder="e.g. take an English course" autofocus>
-            <button class="add-btn" id="open-modal">Add</button>
-          </form>
-
-        </div>
+      <div class="input-container">
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Search tasks"
+        />
+        <button
+          id="clear-input-btn"
+          class="clear-input-btn"
+          aria-label="Clear input"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M18 6L6 18M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
-    </header>
-
-    <section>
-      <div class="container" id="main-content">
-        <div class="wrapper">
-          <div class="list-wrapper">
-            <ul class="stats filters" data-lists>
-              <li id="all" class="filer-task filter-item-active all">All</li>
-              <li id="pending" class="filer-task active">Pending</li>
-              <li id="completed" class="filer-task completed">Completed</li>
-            </ul>
-
-            <ul>
-              <li>
-                <span>Total tasks:</span>
-                <span id="total-tasks">0</span>
-              </li>
-            </ul>
+    </nav>
+    <div class="todo-app">
+      <header id="main-header">
+        <div class="container">
+          <div class="content">
+            <h2 class="title">
+              To-Do List <i class="fa-solid fa-circle-check"></i>
+            </h2>
+            <span class="day"></span>
           </div>
 
-          <button disabled class="clear-btn">Clear all tasks</button>
+          <div class="row">
+            <form class="form-container" id="todo-form">
+              <input
+                type="text"
+                class="task-name"
+                placeholder="e.g. take an English course"
+                autofocus
+              />
+              <button class="add-btn" id="open-modal">Add</button>
+            </form>
+          </div>
+        </div>
+      </header>
+
+      <section>
+        <div class="container" id="main-content">
+          <div class="wrapper">
+            <div class="list-wrapper">
+              <ul class="stats filters" data-lists>
+                <li id="all" class="filer-task filter-item-active all">All</li>
+                <li id="pending" class="filer-task active">Pending</li>
+                <li id="completed" class="filer-task completed">Completed</li>
+              </ul>
+
+              <ul>
+                <li>
+                  <span>Total tasks:</span>
+                  <span id="total-tasks">0</span>
+                </li>
+              </ul>
+            </div>
+
+            <button disabled class="clear-btn">Clear all tasks</button>
+          </div>
+
+          <ul class="todos"></ul>
         </div>
 
-        <ul class="todos">
-        </ul>
-      </div>
+        <div class="empty-container">
+          <img class="empty-img" src="./logging-off.png" alt="No to-do list" />
+          <span class="span-title">All clear</span>
+          <span class="span-desc"
+            >Looks like everything is organized in the right place.</span
+          >
+        </div>
+      </section>
+    </div>
 
-      <div class="empty-container">
-        <img class="empty-img" src="./logging-off.png" alt="No to-do list">
-        <span class="span-title">All clear</span>
-        <span class="span-desc">Looks like everything is organized in the right place.</span>
-      </div>
-    </section>
-  </div>
-
-  <script src="./index.js"></script>
-</body>
-
+    <script src="./index.js"></script>
+  </body>
 </html>
