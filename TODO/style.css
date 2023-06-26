@@ -405,3 +405,23 @@ input[type="checkbox"]:checked::before {
   color: var(--black);
   text-decoration: none;
 }
+
+.empty {
+  display: flex;
+}
+
+.disabled {
+  color: grey;
+  border-bottom: 2px solid grey;
+  cursor: not-allowed;
+}
+
+.enabled {
+  color: black;
+  border-bottom: 2px solid black;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}

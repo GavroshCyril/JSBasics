@@ -25,62 +25,20 @@ window.addEventListener("load", () => {
   let filterValue = "all";
 
   const checkContent = () => {
-    switch (filterValue) {
-      case "all": {
-        if (tasks.length) {
-          emptyContainer.style.display = "none";
-          clearAll.disabled = false;
-          clearAll.style.color = "black";
-          clearAll.style.borderBottom = "2px solid black";
-          clearAll.style.cursor = "pointer";
-        } else {
-          emptyContainer.style.display = "flex";
-          clearAll.style.color = "grey";
-          clearAll.style.borderBottom = "2px solid grey";
-          clearAll.style.cursor = "not-allowed";
-        }
-
-        break;
+    const filteredTasks = tasks.filter((task) => {
+      if (filterValue === "pending") {
+        return !task.isCompleted;
+      } else if (filterValue === "completed") {
+        return task.isCompleted;
+      } else {
+        return true;
       }
+    });
 
-      case "pending": {
-        const filteredTasks = tasks.filter((task) => !task.isCompleted);
-
-        if (filteredTasks.length) {
-          emptyContainer.style.display = "none";
-          clearAll.disabled = false;
-          clearAll.style.color = "black";
-          clearAll.style.borderBottom = "2px solid black";
-          clearAll.style.cursor = "pointer";
-        } else {
-          emptyContainer.style.display = "flex";
-          clearAll.style.color = "grey";
-          clearAll.style.borderBottom = "2px solid grey";
-          clearAll.style.cursor = "not-allowed";
-        }
-
-        break;
-      }
-
-      case "completed": {
-        const filteredTasks = tasks.filter((task) => task.isCompleted);
-
-        if (filteredTasks.length) {
-          emptyContainer.style.display = "none";
-          clearAll.disabled = false;
-          clearAll.style.color = "black";
-          clearAll.style.borderBottom = "2px solid black";
-          clearAll.style.cursor = "pointer";
-        } else {
-          emptyContainer.style.display = "flex";
-          clearAll.style.color = "grey";
-          clearAll.style.borderBottom = "2px solid grey";
-          clearAll.style.cursor = "not-allowed";
-        }
-
-        break;
-      }
-    }
+    emptyContainer.classList.toggle("hidden", filteredTasks.length > 0);
+    clearAll.disabled = filteredTasks.length === 0;
+    clearAll.classList.toggle("disabled", filteredTasks.length === 0);
+    clearAll.classList.toggle("enabled", filteredTasks.length > 0);
   };
 
   const createTask = (task) => {
@@ -280,8 +238,10 @@ window.addEventListener("load", () => {
     const inputValue = mainInput.value;
 
     if (inputValue === "") {
-      const modal = document.createElement("div");
-      modal.innerHTML = `
+      const existingModal = document.querySelector(".modal-bg");
+      if (!existingModal) {
+        const modal = document.createElement("div");
+        modal.innerHTML = `
           <div class="modal-bg">
             <div class="modal">
               <h2>Error</h2>
@@ -290,28 +250,34 @@ window.addEventListener("load", () => {
             </div>
           </div>
         `;
-      document.body.appendChild(modal);
-      const modalCloseBtn = document.querySelector(".modal-close");
-      const modalBg = document.querySelector(".modal-bg");
-      modalBg.style.opacity = 0;
-      modalBg.style.transition = "opacity 0.3s ease";
-      modalBg.addEventListener("click", (e) => {
-        if (e.target.classList.contains("modal-bg")) {
+        document.body.appendChild(modal);
+
+        const modalCloseBtn = modal.querySelector(".modal-close");
+        const modalBg = modal.querySelector(".modal-bg");
+
+        modalBg.style.opacity = 0;
+        modalBg.style.transition = "opacity 0.3s ease";
+
+        modalBg.addEventListener("click", (e) => {
+          if (e.target.classList.contains("modal-bg")) {
+            modalBg.style.opacity = 0;
+            setTimeout(() => {
+              modal.remove();
+            }, 400);
+          }
+        });
+
+        setTimeout(() => {
+          modalBg.style.opacity = 1;
+        }, 40);
+
+        modalCloseBtn.addEventListener("click", () => {
           modalBg.style.opacity = 0;
           setTimeout(() => {
             modal.remove();
           }, 400);
-        }
-      });
-      setTimeout(() => {
-        modalBg.style.opacity = 1;
-      }, 40);
-      modalCloseBtn.addEventListener("click", () => {
-        modalBg.style.opacity = 0;
-        setTimeout(() => {
-          modal.remove();
-        }, 400);
-      });
+        });
+      }
       return;
     }
 
